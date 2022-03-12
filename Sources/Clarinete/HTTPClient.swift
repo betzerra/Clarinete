@@ -18,40 +18,40 @@ extension HTTPClient: APIClient {
         path: String,
         completion: @escaping ((Result<T, Error>) -> Void)
     ) -> URLSessionDataTask? where T : Decodable {
-        
+
         return request(path: path, method: "GET", completion: completion)
     }
-    
+
     func request<T>(
         path: String,
         method: String,
         completion: @escaping ((Result<T, Error>) -> Void)
     ) -> URLSessionDataTask? where T : Decodable {
-        
+
         var components = URLComponents()
         components.scheme = scheme
         components.host = host
         components.path = path
-        
+
         guard let url = components.url else {
             completion(.failure(APIError.badURL))
             return nil
         }
-        
+
         var request = URLRequest(url: url)
         request.httpMethod = method
-        
+
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
                 completion(.failure(error))
                 return
             }
-            
+
             guard let data = data else {
                 completion(.failure(APIError.noResponse))
                 return
             }
-            
+
             do {
                 let resource = try Clarinete.decoder().decode(T.self, from: data)
                 completion(.success(resource))
@@ -59,7 +59,7 @@ extension HTTPClient: APIClient {
                 completion(.failure(error))
             }
         }
-        
+
         task.resume()
         return task
     }

@@ -15,16 +15,16 @@ class HTTPTests: XCTestCase {
         let clarinete = Clarinete(client: HTTPClient())
         _ = clarinete.getTrends { result in
             switch result {
-            case .success(let posts):
-                XCTAssert(posts.count > 0)
-                
+            case .success(let trends):
+                XCTAssert(trends.count > 0)
+
             case .failure(let error):
                 XCTFail(error.localizedDescription)
             }
-            
+
             expectation.fulfill()
         }
-        
+
         wait(for: [expectation], timeout: 10)
     }
 }

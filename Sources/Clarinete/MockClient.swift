@@ -29,7 +29,7 @@ extension MockClient: APIClient {
         } catch {
             completion(.failure(error))
         }
-        
+
         return nil
     }
 }

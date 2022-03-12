@@ -6,9 +6,9 @@ let client = Clarinete()
 
 _ = client.getTrends { result in
     switch result {
-    case .success(let posts):
-        posts.forEach { post in
-            let line = [post.name.yellow(), post.title]
+    case .success(let trends):
+        for trend in trends {
+            let line = [trend.name.yellow(), trend.summary]
                 .compactMap { $0 }
                 .joined(separator: " - ")
 

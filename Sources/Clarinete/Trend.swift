@@ -8,9 +8,14 @@
 import Foundation
 
 public class Trend {
-    let name: String
-    var relatedTopics = Set<String>()
-    var posts = [Post]()
+    public let name: String
+    public var relatedTopics = Set<String>()
+    public var posts = [Post]()
+
+    public var summary: String? {
+        let post = posts.first(where: { $0.title != nil })
+        return post?.title
+    }
     
     init(name: String) {
         self.name = name
@@ -44,7 +49,8 @@ public class Trend {
                 trends.append(newTrend)
             }
         }
-        return trends
+
+        return trends.filter { $0.summary != nil }
     }
 }
 

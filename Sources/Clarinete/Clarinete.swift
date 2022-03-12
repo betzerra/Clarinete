@@ -10,11 +10,15 @@ public struct Clarinete {
         return decoder
     }
     
+    public init() {
+        self.init(client: HTTPClient())
+    }
+
     public init(client: APIClient) {
         self.client = client
     }
     
-    func getTrends(
+    public func getTrends(
         completion: @escaping ((Result<[Post], Error>) -> Void)
     ) -> URLSessionDataTask? {
         return client.get(

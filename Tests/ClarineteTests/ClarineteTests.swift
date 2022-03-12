@@ -11,16 +11,15 @@ final class ClarineteTests: XCTestCase {
         _ = clarinete.getTrends { result in
             switch result {
             case .success(let posts):
-                XCTAssertEqual(posts.count, 3)
+                XCTAssertEqual(posts.count, 40)
                 
                 let first = posts.first!
-                XCTAssertEqual(first.id, 10333)
-                XCTAssertEqual(first.name, "Gabriel Boric")
-                XCTAssertEqual(first.title, "Boric: “Chile defenderá los DDHH sin importar la ideología que los vulnere”")
-                XCTAssertEqual(first.relatedTopics.count, 2)
-                XCTAssert(first.relatedTopics.contains("Chile"))
-                XCTAssert(first.relatedTopics.contains("DDHH"))
-                XCTAssertEqual(first.url, URL(string: "https://clarin.com/mundo/gabriel-boric-da-primer-discurso-presidente-chile-movilizaciones-_0_OIB1zsxKeP.html")!)
+                XCTAssertEqual(first.id, 37863081)
+                XCTAssertEqual(first.name, "Rozín")
+                XCTAssertEqual(first.title, "Murió Gerardo Rozín: cómo le contó a su amigo Osvaldo Bazán, con humor, que se estaba muriendo de cáncer")
+                XCTAssertEqual(first.relatedTopics.count, 1)
+                XCTAssert(first.relatedTopics.contains("Gerardo Rozín"))
+                XCTAssertEqual(first.url, URL(string: "https://clarin.com/espectaculos/murio-gerardo-rozin-conto-humor-amigo-osvaldo-bazan-muriendo-cancer_0_O3dn0PCKx3.html")!)
                 
             case .failure(let error):
                 XCTFail(error.localizedDescription)

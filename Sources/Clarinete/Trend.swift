@@ -12,9 +12,9 @@ public class Trend {
     public var relatedTopics = Set<String>()
     public var posts = [Post]()
 
-    public var summary: String? {
-        let post = posts.first(where: { $0.title != nil })
-        return post?.title
+    public var summary: Summary? {
+        let post = posts.first(where: { $0.summary != nil })
+        return post?.summary
     }
     
     init(name: String) {

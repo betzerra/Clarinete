@@ -7,9 +7,26 @@
 
 import Foundation
 
+enum HTTPClientError: Error {
+    case badHost
+}
+
 class HTTPClient {
-    let host: String = "clarinete.seppo.com.ar"
-    let scheme: String = "https"
+    let host: String
+    let scheme: String
+
+    init(configuration: Configuration) throws {
+        let components = URLComponents(string: configuration.host)
+        guard
+            let scheme = components?.scheme,
+            let host = components?.host else {
+
+            throw HTTPClientError.badHost
+        }
+
+        self.host = host
+        self.scheme = scheme
+    }
 }
 
 extension HTTPClient: APIClient {

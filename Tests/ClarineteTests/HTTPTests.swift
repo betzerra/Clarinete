@@ -9,10 +9,15 @@ import XCTest
 @testable import Clarinete
 
 class HTTPTests: XCTestCase {
+    static func configuration() -> Configuration {
+        return Configuration(host: "https://clarinete.seppo.com.ar")
+    }
+
     func testTrendingSuccess() {
         let expectation = expectation(description: "HTTP Request finish")
 
-        let clarinete = Clarinete(client: HTTPClient())
+        let client = try! HTTPClient(configuration: HTTPTests.configuration())
+        let clarinete = Clarinete(client: client)
         _ = clarinete.getTrends { result in
             switch result {
             case .success(let trends):

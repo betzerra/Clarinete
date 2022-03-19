@@ -10,8 +10,9 @@ public struct Clarinete {
         return decoder
     }
 
-    public init() {
-        self.init(client: HTTPClient())
+    public init(configuration: Configuration) throws {
+        let client = try HTTPClient(configuration: configuration)
+        self.init(client: client)
     }
 
     public init(client: APIClient) {

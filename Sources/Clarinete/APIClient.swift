@@ -8,7 +8,6 @@
 import Foundation
 
 public protocol APIClient {
-
     func get<T: Decodable>(
         path: String,
         completion: @escaping ((Result<T, Error>) -> Void)

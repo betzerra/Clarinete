@@ -8,7 +8,7 @@
 import Foundation
 
 public class Trend {
-    public let name: String
+    public var name: String
     public var relatedTopics = Set<String>()
     public var posts = [Post]()
 
@@ -34,6 +34,10 @@ public class Trend {
     }
     
     func append(post: Post) {
+        if !name.contains(post.name) {
+            name = "\(name), \(post.name)"
+        }
+
         posts.append(post)
         relatedTopics.formUnion(post.relatedTopics)
     }

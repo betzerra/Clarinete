@@ -25,7 +25,11 @@ do {
                     return
                 }
 
-                let line = [trend.name.yellow(), summary.text]
+                let line = [
+                    trend.name.yellow(),
+                    trend.relatedTopics.isEmpty ? nil : "(\(trend.formattedRelatedTopics))".green(),
+                    summary.text
+                ]
                     .compactMap { $0 }
                     .joined(separator: " - ")
 

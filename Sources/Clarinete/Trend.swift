@@ -28,7 +28,7 @@ public class Trend {
         
         var topics = post.relatedTopics
         topics.append(post.name)
-        
+
         // true if relatedTopics has members in common with topics
         return !relatedTopics.isDisjoint(with: topics)
     }
@@ -41,7 +41,7 @@ public class Trend {
         posts.append(post)
         relatedTopics.formUnion(post.relatedTopics)
     }
-    
+
     static func trends(from posts: [Post]) -> [Trend] {
         var trends = [Trend]()
         posts.forEach { post in
@@ -54,7 +54,9 @@ public class Trend {
             }
         }
 
-        return trends.filter { $0.summary != nil }
+        return trends
+            .filter { $0.summary != nil }
+            .sorted { $0.posts.count > $1.posts.count }
     }
 }
 
@@ -65,7 +67,7 @@ extension Array where Element == Trend {
                 return trend
             }
         }
-        
+
         return nil
     }
 }

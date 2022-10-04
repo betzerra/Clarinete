@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "git@github.com:betzerra/Pluma.git",
       "state" : {
-        "branch" : "fix/public-scope",
-        "revision" : "d4eddebdf707a75f247643d04397f76864281c3d"
+        "branch" : "main",
+        "revision" : "9193be39fecc572e7e28101a277612b1e8e38c36"
       }
     }
   ],

@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "Pluma",
+        "repositoryURL": "git@github.com:betzerra/Pluma.git",
+        "state": {
+          "branch": "main",
+          "revision": "9193be39fecc572e7e28101a277612b1e8e38c36",
+          "version": null
+        }
+      },
+      {
         "package": "swift-argument-parser",
         "repositoryURL": "git@github.com:apple/swift-argument-parser.git",
         "state": {

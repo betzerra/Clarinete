@@ -9,7 +9,14 @@ final class ClarineteTests: XCTestCase {
         let pluma = Pluma(client: client, decoder: Pluma.defaultDecoder())
 
         let clarinete = Clarinete(client: pluma)
-        let trends = await clarinete.getTrends()
-        XCTAssert(trends.count > 0)
+
+        Task.init {
+            do {
+                let trends = try await clarinete.getTrends()
+                XCTAssert(trends.count > 0)
+            } catch {
+                XCTFail(error.localizedDescription)
+            }
+        }
     }
 }

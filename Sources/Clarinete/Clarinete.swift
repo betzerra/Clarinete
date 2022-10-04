@@ -16,7 +16,7 @@ public struct Clarinete {
     public func getTrends() async throws -> [Trend] {
         let posts: [Post] = try await client.request(
             method: .GET,
-            path: "/api/trends",
+            path: "api/trends",
             params: nil
         )
 

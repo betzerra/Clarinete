@@ -10,42 +10,42 @@ struct CLIOptions: ParsableCommand {
 
 let options = CLIOptions.parseOrExit()
 let apiHost = options.host ?? "https://clarinete.seppo.com.ar"
-let configuration = Configuration(host: apiHost)
 
-do {
-    let client = try Clarinete(configuration: configuration)
+guard let url = URL(string: apiHost) else {
+    fatalError("Invalid Host URL")
+}
 
-    _ = client.getTrends { result in
-        switch result {
-        case .success(let trends):
-            for trend in trends {
-                guard let summary = trend.summary else {
-                    print(trend.name.yellow())
-                    print("\n")
-                    return
-                }
+let configuration = Configuration(host: url)
 
-                let line = [
-                    trend.name.yellow(),
-                    summary.text
-                ]
-                    .compactMap { $0 }
-                    .joined(separator: " - ")
+Task.init {
+    do {
+        let client = try Clarinete(configuration: configuration)
+        let trends = try await client.getTrends()
 
-                print(line)
-                print(summary.url)
+        for trend in trends {
+            guard let summary = trend.summary else {
+                print(trend.name.yellow())
                 print("\n")
+                return
             }
-            exit(EXIT_SUCCESS)
 
-        case .failure(let error):
-            print("Error: \(error)")
-            exit(EXIT_FAILURE)
+            let line = [
+                trend.name.yellow(),
+                summary.text
+            ]
+                .compactMap { $0 }
+                .joined(separator: " - ")
+
+            print(line)
+            print(summary.url)
+            print("\n")
         }
+        exit(EXIT_SUCCESS)
+
+    } catch {
+        print("ERROR: \(error.localizedDescription)")
+        exit(EXIT_FAILURE)
     }
-} catch {
-    print("Error: \(error)")
-    exit(EXIT_FAILURE)
 }
 
 dispatchMain()

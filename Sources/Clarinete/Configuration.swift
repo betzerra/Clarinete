@@ -8,9 +8,9 @@
 import Foundation
 
 public struct Configuration {
-    public let host: String
+    public let host: URL
 
-    public init(host: String) {
+    public init(host: URL) {
         self.host = host
     }
 }

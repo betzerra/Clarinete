@@ -1,21 +1,15 @@
 import XCTest
 @testable import Clarinete
+import Pluma
 
 final class ClarineteTests: XCTestCase {
     
     func testTrendingSuccess() {
-        let mockClient = MockClient()
-        mockClient.responseData = try! Bundle.module.data(from: "GET_trends")
-        
-        let clarinete = Clarinete(client: mockClient)
-        _ = clarinete.getTrends { result in
-            switch result {
-            case .success(let trends):
-                XCTAssert(trends.count > 0)
-                
-            case .failure(let error):
-                XCTFail(error.localizedDescription)
-            }
-        }
+        let client = MockClient(bundle: Bundle.module)
+        let pluma = Pluma(client: client, decoder: Pluma.defaultDecoder())
+
+        let clarinete = Clarinete(client: pluma)
+        let trends = await clarinete.getTrends()
+        XCTAssert(trends.count > 0)
     }
 }

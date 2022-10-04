@@ -1,42 +1,25 @@
 import Foundation
+import Pluma
 
 public struct Clarinete {
-    let client: APIClient
-
-    static func decoder() -> JSONDecoder {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        return decoder
-    }
+    let client: Pluma
 
     public init(configuration: Configuration) throws {
-        let client = try HTTPClient(configuration: configuration)
+        let client = Pluma(baseURL: configuration.host, decoder: nil)
         self.init(client: client)
     }
 
-    public init(client: APIClient) {
+    public init(client: Pluma) {
         self.client = client
     }
 
-    public func getTrends(
-        completion: @escaping ((Result<[Trend], Error>) -> Void)
-    ) -> URLSessionDataTask? {
-
-        let handler: ((Result <[Post], Error>) -> Void) = { result in
-            switch result {
-            case .success(let posts):
-                let trends = Trend.trends(from: posts)
-                completion(.success(trends))
-                
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
-
-        return client.get(
+    public func getTrends() async throws -> [Trend] {
+        let posts: [Post] = try await client.request(
+            method: .GET,
             path: "/api/trends",
-            completion: handler
+            params: nil
         )
+
+        return Trend.trends(from: posts)
     }
 }

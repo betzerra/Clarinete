@@ -10,18 +10,8 @@ import Foundation
 public struct Post: Codable {
     public let id: Int
     public let name: String
-    public let title: String?
+    public let title: String
     public let relatedTopics: [String]
-    public let url: URL?
-
-    public var summary: Summary? {
-        guard
-            let title = title,
-            let url = url else {
-
-            return nil
-        }
-
-        return Summary(text: title, url: url)
-    }
+    public let url: URL
+    public let category: Category?
 }

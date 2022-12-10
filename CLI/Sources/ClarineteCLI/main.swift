@@ -29,8 +29,11 @@ Task.init {
                 return
             }
 
+            let count = trend.posts.count > 1 ? "(\(trend.posts.count))" : nil
+
             let line = [
                 trend.name.yellow(),
+                count?.yellow(),
                 summary.category?.rawValue.capitalized.red(),
                 summary.title
             ]

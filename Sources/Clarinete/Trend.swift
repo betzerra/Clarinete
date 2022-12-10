@@ -11,11 +11,6 @@ public class Trend {
     public var name: String
     public var relatedTopics = Set<String>()
     public var posts = [Post]()
-
-    public var summary: Summary? {
-        let post = posts.first(where: { $0.summary != nil })
-        return post?.summary
-    }
     
     init(name: String) {
         self.name = name
@@ -55,7 +50,6 @@ public class Trend {
         }
 
         return trends
-            .filter { $0.summary != nil }
             .sorted { $0.posts.count > $1.posts.count }
     }
 }

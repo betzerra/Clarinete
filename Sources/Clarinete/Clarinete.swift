@@ -14,12 +14,12 @@ public struct Clarinete {
     }
 
     public func getTrends() async throws -> [Trend] {
-        let posts: [Post] = try await client.request(
+        let posts: LossyCodableList<Post> = try await client.request(
             method: .GET,
             path: "api/trends",
             params: nil
         )
 
-        return Trend.trends(from: posts)
+        return Trend.trends(from: posts.elements)
     }
 }

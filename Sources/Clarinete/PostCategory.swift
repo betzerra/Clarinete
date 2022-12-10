@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum Category: String, Codable {
+public enum PostCategory: String, Codable {
     case economics
     case international
     case politics

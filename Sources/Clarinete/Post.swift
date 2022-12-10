@@ -13,4 +13,5 @@ public struct Post: Codable {
     public let title: String
     public let relatedTopics: [String]
     public let url: URL
+    public let category: Category?
 }

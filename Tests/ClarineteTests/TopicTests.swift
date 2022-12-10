@@ -25,7 +25,8 @@ class TrendTests: XCTestCase {
             relatedTopics: [
                 "Gabriel Boric"
               ],
-            url: URL(string: "https://www.foo.bar/")!
+            url: URL(string: "https://www.foo.bar/")!,
+            category: .politics
         )
 
         XCTAssertEqual(trend.isRelated(with: post), true)
@@ -46,7 +47,8 @@ class TrendTests: XCTestCase {
                 "Gabriel Boric",
                 "Felipe"
               ],
-            url: URL(string: "https://www.foo.bar/")!
+            url: URL(string: "https://www.foo.bar/")!,
+            category: .politics
         )
 
         trend.append(post: post)

@@ -9,7 +9,7 @@ struct CLIOptions: ParsableCommand {
 }
 
 let options = CLIOptions.parseOrExit()
-let apiHost = options.host ?? "https://clarinete.seppo.com.ar"
+let apiHost = options.host ?? "https://clarinetecache.apps.betzerra.dev"
 
 guard let url = URL(string: apiHost) else {
     fatalError("Invalid Host URL")
@@ -23,7 +23,7 @@ Task.init {
         let trends = try await client.getTrends()
 
         for trend in trends {
-            guard let summary = trend.summary else {
+            guard let summary = trend.posts.first else {
                 print(trend.name.yellow())
                 print("\n")
                 return
@@ -31,7 +31,8 @@ Task.init {
 
             let line = [
                 trend.name.yellow(),
-                summary.text
+                summary.category?.rawValue.capitalized.red(),
+                summary.title
             ]
                 .compactMap { $0 }
                 .joined(separator: " - ")

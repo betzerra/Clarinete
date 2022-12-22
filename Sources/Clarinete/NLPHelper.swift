@@ -6,10 +6,10 @@
 //
 
 import Foundation
-import CoreML
+import NaturalLanguage
 
 public class NLPHelper {
-    private let tagger: NSLinguisticTagger
+    private let tagger: NLTagger
     private let text: String
 
     private let options: NSLinguisticTagger.Options = [
@@ -19,7 +19,7 @@ public class NLPHelper {
     ]
 
     public init(text: String) {
-        tagger = NSLinguisticTagger(tagSchemes:[.nameType], options: 0)
+        tagger = NLTagger(tagSchemes: [.nameType])
         tagger.string = text
         self.text = text
     }
@@ -27,14 +27,16 @@ public class NLPHelper {
     public var namedEntities: [String] {
         var entities = [String]()
 
-        let range = NSRange(location: 0, length: text.utf16.count)
+        let options: NLTagger.Options = [.omitPunctuation, .omitWhitespace, .joinNames]
+        let tags: [NLTag] = [.personalName, .placeName, .organizationName]
 
-        let tags: [NSLinguisticTag] = [.personalName, .placeName, .organizationName]
-        tagger.enumerateTags(in: range, unit: .word, scheme: .nameType, options: options) { tag, tokenRange, stop in
+        tagger.enumerateTags(in: text.startIndex..<text.endIndex, unit: .word, scheme: .nameType, options: options) { tag, tokenRange in
+            // Get the most likely tag, and print it if it's a named entity.
             if let tag = tag, tags.contains(tag) {
-                let name = (text as NSString).substring(with: tokenRange)
+                let name = String(text[tokenRange])
                 entities.append(name)
             }
+            return true
         }
 
         return entities
